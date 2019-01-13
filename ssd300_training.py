@@ -98,7 +98,7 @@ normalize_coords = True
 # In[4]:
 
 
-# 1: Build the Keras model.
+# 1: Build the Keras model. tester
 
 K.clear_session() # Clear previous models from memory.
 
@@ -120,7 +120,7 @@ model = ssd_300(image_size=(img_height, img_width, img_channels),
 # 2: Load some weights into the model.
 
 # TODO: Set the path to the weights you want to load.
-weights_path = 'path/to/VGG_ILSVRC_16_layers_fc_reduced.h5'
+weights_path = 'VGG_ILSVRC_16_layers_fc_reduced.h5'
 
 model.load_weights(weights_path, by_name=True)
 
@@ -148,7 +148,7 @@ model.compile(optimizer=sgd, loss=ssd_loss.compute_loss)
 
 
 # TODO: Set the path to the `.h5` file of the model to be loaded.
-model_path = 'path/to/trained/model.h5'
+model_path = 'VGG_VOC0712_SSD_300x300_iter_120000.h5'
 
 # We need to create an SSDLoss object in order to pass that to the model loader.
 ssd_loss = SSDLoss(neg_pos_ratio=3, alpha=1.0)
@@ -158,6 +158,8 @@ K.clear_session() # Clear previous models from memory.
 model = load_model(model_path, custom_objects={'AnchorBoxes': AnchorBoxes,
                                                'L2Normalization': L2Normalization,
                                                'compute_loss': ssd_loss.compute_loss})
+
+model.load_weights(model_path, by_name=True)
 
 
 # ## 3. Set up the data generators for the training
